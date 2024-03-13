@@ -1,0 +1,23 @@
+{% extends "../base.html" %}
+{% load static %}
+{% load crispy_forms_tags %} 
+{% block content %}
+<html>
+  <head>
+    <title>Document</title>
+    </head>
+  <body>
+     
+<div>
+  <h1>User ID :- {{userdetails.userid}}</h1>
+  <h2>Date Of Birth :- {{userdetails.dateofbirth}}</h2>
+  <h3>Date Of Joining :- {{userdetails.dateofjoining}}</h3>
+  <h4>Department :- {{userdetails.department}}</h4>
+  <h5>Address :- {{userdetails.address}}</h5>
+  <h6>EmergencyContactNo :- {{userdetails.emergencycontactno}}</h6>
+  <h7>LastAppraisalDate :- {{userdetails.lastappraisaldate}}</h7>
+</div>
+
+</body>
+
+{% endblock content %}
