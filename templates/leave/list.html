@@ -47,11 +47,11 @@
                   <td class="align-middle text-center">
                     <form method="post" action="{% url 'update_status' leave.pk %}">
                       {% csrf_token %}
-                        <input type="submit" value="Change Status">
+                        <input type="submit" value="Change Status" class="btn btn-primary" >
                   </form>
                       </td>
                       <td class="align-middle text-center">
-                        <div class="d-flex justify-content-center">
+                        
                         <a href="{% url 'update_leave' leave.id %}" class="btn btn-warning">
                           UPDATE
                         </a>
@@ -61,7 +61,7 @@
                           <a href="{% url 'delete_leave' leave.id %}" class="btn btn-danger">
                             DELETE
                           </a>
-                        </div>
+                        
                       </td>
                 </tr>    
                 {% endfor %}       

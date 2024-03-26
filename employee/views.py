@@ -138,12 +138,12 @@ class UpdateStatusView(View):
         leave = Leave.objects.get(id=pk)
         
         # Update the leave status based on the form data
-        if leave.status == 'pending':
-            leave.status = 'approved'
-        elif leave.status == 'approved':
-            leave.status = 'rejected'
+        if leave.status == 'Pending':
+            leave.status = 'Approved'
+        elif leave.status == 'Approved':
+            leave.status = 'Rejected'
         else:
-            leave.status = "pending"
+            leave.status = "Pending"
         
         # Save the updated leave status
         leave.save()
