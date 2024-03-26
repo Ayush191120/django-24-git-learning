@@ -1,6 +1,7 @@
 from django.db import models
 from user.models import User
 
+
 # Create your models here.
 class RelationType(models.Model):
     relationname=models.CharField(max_length=100)
@@ -8,7 +9,7 @@ class RelationType(models.Model):
         db_table="relationtype"
 
         def __str__(self):
-            return self.name
+            return self.relationname
 
 depChoices = (
     ("administration","administration"),
@@ -29,7 +30,7 @@ class UserDetail(models.Model):
         db_table="userdetail"
 
         def __str__(self): 
-         return self.name
+         return self.userid
 
 
 class UserRelative(models.Model):
@@ -75,16 +76,40 @@ leaves=(
     ('maternity leave', 'maternity leave' ),
     ('paternity leave', 'paternity leave'),
     ('annual leave','annual leave')
+
 )
+status_choices = (
+    ('Pending', 'Pending'),
+    ('Approved', 'Approved'),
+    ('Rejected', 'Rejected'),
+)
+
 class Leave(models.Model):
     leavetype=models.CharField(max_length=100,choices=leaves)
     notes=models.CharField(max_length=100)
     dates=models.CharField(max_length=100)
-    isapproved=models.BooleanField(default=False)
     reason=models.CharField(max_length=100)
     user=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    status = models.CharField(max_length=10, choices=status_choices, default='pending')
+
     class Meta:
-        db_table="leave"  
+        db_table="leave" 
+
+    def __str__(self):
+            return f"Leave for {self.user.username}"      
+
+class Attendance(models.Model):
+    EmployeeName = models.CharField(max_length=100)
+    Pin = models.IntegerField()
+    Date = models.DateField()
+    Signin = models.TimeField()
+    Signout = models.TimeField()
+    Workinghour = models.IntegerField()
+    class Meta:
+        db_table="Attendance"
+
+        
+             
 
              
 

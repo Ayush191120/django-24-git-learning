@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path,include
 from .views import UserDetailCreationView,UserDetailListView,UserRelativeCreateView,CelebrationCreationView,CelebrationListView,CelebrationParticipantsCreateView
-from .views import LeaveCreateView,LeaveListView,RelationTypeCreateView
+from .views import LeaveCreateView,LeaveListView,RelationTypeCreateView,AttendanceCreateView,AttendanceListView,UpdateStatusView
 from . import views
 
 
@@ -24,8 +24,10 @@ urlpatterns = [
     path("leave_delete/<int:pk>/",views.LeaveDeleteView.as_view(),name="delete_leave"),
     path("leave_detail/<int:pk>/",views.LeaveDetailView.as_view(),name="detail_leave"),
     path("leave_update/<int:pk>/",views.LeaveUpdateView.as_view(),name="update_leave"),
-    path("leave_status_update/<int:pk>/",views.UpdateStatusView.as_view(),name="update_status"),
-
+    path("attendance_create/",AttendanceCreateView.as_view(),name="attendance_create"),
+    path("attendance_list/",AttendanceListView.as_view(),name="attendance_list"),
+    path("leave_status_update/<int:pk>/",UpdateStatusView.as_view(),name="update_status"),
+    
     
    
    

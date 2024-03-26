@@ -1,18 +1,19 @@
+from typing import Any
 from django.shortcuts import render
 from django.views.generic.edit import CreateView,UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic import ListView
 from .forms import UserDetailCreationForm,RelationTypeCreationForm,CelebrationCreationForm,LeaveCreationForm
 from .models import UserDetail,UserRelative,CelebrationParticipants,Leave
-from .forms import UserDetailCreationForm,UserRelativeCreationForm,CelebrationParticipantsCreationForm
-from .models import UserDetail,Celebration,RelationType
+from .forms import UserDetailCreationForm,UserRelativeCreationForm,CelebrationParticipantsCreationForm,AttendanceCreationForm
+from .models import UserDetail,Celebration,RelationType,Attendance
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import DeleteView 
 from django.views import View
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
-
+from user.models import User
 
 
 # Create your views here.
@@ -96,21 +97,23 @@ class LeaveCreateView(CreateView):
     success_url = "/employee/leave_list/"
 
     def form_valid(self, form):
-        form.instance.user = self.request.user  # Assign the currently logged-in user to the user field
+        # Assign the currently logged-in user to the user field of the leave instance
+        form.instance.user = self.request.user  
         return super().form_valid(form)
-
-    # def get_initial(self):
-    #     initial = super().get_initial()
-    #     user_id = self.kwargs.get('user_id')
-    #     user = get_object_or_404(UserDetail, pk=user_id)
-    #     initial['user'] = user
-    #     return initial
+    
+    def get_initial(self):
+        initial = super().get_initial()
+        user_id = self.request.user.id
+        user = get_object_or_404(User, pk = user_id)
+        initial['user'] = user
+        return initial
      
 
 class LeaveListView(ListView):
     template_name = "leave/list.html"
     model = Leave
     context_object_name = "leaves" 
+
 
 class LeaveDeleteView(DeleteView):
     model = Leave
@@ -126,26 +129,39 @@ class LeaveUpdateView(UpdateView):
     model = Leave
     form_class = LeaveCreationForm
     template_name = "leave/leave_update.html"
-    success_url = "/employee/leave_list/"                
+    success_url = "/employee/leave_list/" 
 
 class UpdateStatusView(View):
     
     def post(self, request, pk):
-        # Get the task instance
-        print("pk....",pk)
-        leaves = Leave.objects.get(id=pk)
-        print("leave....",Leave)
+        # Get the leave instance
+        leave = Leave.objects.get(id=pk)
         
-        # Check the current status and update it accordingly
-        if Leave.status == "Not Started":
-            Leave.status = "In Progress"
-        elif Leave.status == "In Progress":
-            Leave.status = "Done"
+        # Update the leave status based on the form data
+        if leave.status == 'pending':
+            leave.status = 'approved'
+        elif leave.status == 'approved':
+            leave.status = 'rejected'
+        else:
+            leave.status = "pending"
         
-        # Save the updated task
-        Leave.save()
+        # Save the updated leave status
+        leave.save()
         
-        return redirect(reverse('leave_list')) #lazy reverse
+        return redirect(reverse('employee_dashboard'))    
+
+class AttendanceCreateView(CreateView):
+    template_name = "attendance/create.html"
+    model = Attendance
+    form_class = AttendanceCreationForm
+    success_url = "/employee/attendance_list/"
+
+class AttendanceListView(ListView):
+    template_name = "attendance/list.html"
+    model = Attendance 
+    context_object_name = "attendances"                      
+
+
 
     
 

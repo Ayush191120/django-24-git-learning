@@ -7,7 +7,6 @@
       <div class="card mb-4">
         <div class="card-header pb-0">
           <h6>Celebration List</h6>
-          <a href = "{% url 'celebration_create' %}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProjectModal">Add Celebration</a>
         </div>
         <div class="card-body px-0 pt-0 pb-2">
           <div class="table-responsive p-0">
@@ -27,12 +26,8 @@
                 <tr>
                   <td>
                     <div class="d-flex px-2 py-1">
-                      <div>
-                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1"> 
-                      </div>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="mb-0 text-sm">{{celebration.title}}</h6>
-                         <p class="text-xs text-secondary mb-0">john@creative-tim.com</p>
                       </div>
                     </div>
                   </td>
