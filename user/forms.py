@@ -28,3 +28,4 @@ class EmployeeRegistrationForm(UserCreationForm):
         user .is_employee = True 
         user .save()
         return user
+    

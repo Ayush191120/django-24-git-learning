@@ -5,6 +5,7 @@ from django.contrib.auth.views import LoginView,LogoutView
 
 
 
+
 urlpatterns = [
     path("hr_register/",views.HrRegisterView.as_view(),name="hr_register"),
     path("employee_register/",views.EmployeeRegisterView.as_view(),name="employee_register"),
@@ -18,6 +19,8 @@ urlpatterns = [
     path("logout/",views.logout_view,name="logout"),
     path('status_update/<int:pk>/',views.UpdateTaskStatus.as_view(),name='status_update'),
     path('status_update/<int:pk>/',views.UpdateLeaveStatus.as_view(),name='status_update'),
+    path('profile/', views.view_profile, name='profile_view'),
+
    
     
 ]

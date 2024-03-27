@@ -66,9 +66,13 @@ class UserLoginView(LoginView):
     #             return '/user/hr_dashboard/'
     #       else:
     #             return '/user/employee_dashboard/'
+
+def view_profile(request):
+    user = request.user  # Get the current logged-in user
+    # Add any additional logic to retrieve user profile data if needed
+    return render(request, 'user_profile.html', {'user': user})
     
-   
-    
+     
 def logout_view(request):
     logout(request)
     return redirect("login")
